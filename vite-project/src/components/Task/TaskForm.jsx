@@ -8,7 +8,7 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
     title: '',
     description: '',
     priority: 'Medium',
-    assignedTo: [], // UPDATED: Initialized as an empty array for multiple users
+    assignedTo: [],
     dueDate: ''
   });
 
@@ -30,13 +30,12 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
     fetchUsers();
   }, []);
 
-  // NEW: Helper function to toggle user selection in the array
   const toggleUserSelection = (userId) => {
     setFormData(prev => {
       const isAlreadySelected = prev.assignedTo.includes(userId);
       const updatedSelection = isAlreadySelected
-        ? prev.assignedTo.filter(id => id !== userId) // Remove if already there
-        : [...prev.assignedTo, userId]; // Add if not there
+        ? prev.assignedTo.filter(id => id !== userId) 
+        : [...prev.assignedTo, userId]; 
       return { ...prev, assignedTo: updatedSelection };
     });
   };
@@ -51,7 +50,7 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
         description: formData.description,
         priority: formData.priority,
         project: projectId,
-        // Send the array of IDs (backend now loops through these for emails)
+        
         assignedTo: formData.assignedTo.length > 0 ? formData.assignedTo : [],
         dueDate: formData.dueDate || null
       };
@@ -59,12 +58,11 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
       const res = await API.post('/tasks', payload);
       onTaskAdded(res.data);
 
-      // Reset form
       setFormData({
         title: '',
         description: '',
         priority: 'Medium',
-        assignedTo: [], // Reset to empty array
+        assignedTo: [], 
         dueDate: ''
       });
     } catch (err) {
@@ -77,7 +75,7 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
     <div style={containerStyle}>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         
-        {/* ROW 1: TITLE & PRIORITY */}
+       
         <div style={rowStyle}>
           <input
             type="text"
@@ -98,7 +96,6 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
           </select>
         </div>
 
-        {/* ROW 2: MULTI-ASSIGNEE SELECTION */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <label style={{ fontSize: '13px', fontWeight: '600', color: '#64748b' }}>
             Assign to Team Members: {fetchingUsers && "(Loading...)"}
@@ -127,7 +124,6 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
           </div>
         </div>
 
-        {/* ROW 3: DUE DATE */}
         <div style={rowStyle}>
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <label style={{ fontSize: '12px', color: '#64748b' }}>Due Date</label>
@@ -140,7 +136,7 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
           </div>
         </div>
 
-        {/* ROW 4: DESCRIPTION */}
+   
         <textarea
           placeholder="Add a more detailed description... (optional)"
           value={formData.description}
@@ -158,7 +154,6 @@ const TaskForm = ({ projectId, onTaskAdded }) => {
   );
 };
 
-// --- UPDATED STYLES ---
 const containerStyle = { 
   maxWidth: '800px', 
   margin: '0 auto', 

@@ -7,7 +7,7 @@ const ProjectSchema = new mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User' // Links the project to the user who created it
+    ref: 'User' 
   },
   members: [{
     type: mongoose.Schema.Types.ObjectId,

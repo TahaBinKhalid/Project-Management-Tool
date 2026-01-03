@@ -4,7 +4,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const User = require('./models/User'); // Moved up with imports
+const User = require('./models/User'); 
 
 const app = express();
 const server = http.createServer(app);
@@ -18,12 +18,10 @@ const io = new Server(server, {
 
 connectDB();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.set('io', io);
 
-// Socket.io Logic
 io.on('connection', (socket) => {
   console.log(`User Connected: ${socket.id}`);
   socket.on('joinProject', (projectId) => {
@@ -34,17 +32,14 @@ io.on('connection', (socket) => {
   });
 });
 
-// --- API ROUTES ---
 
-// 1. Existing routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/tasks', require('./routes/tasks'));
 
-// 2. The missing Users route (Fixed & placed BEFORE listen)
 app.get('/api/users', async (req, res) => {
   try {
     const users = await User.find({}, 'name _id');
-    console.log("Found users:", users); // This will log in your terminal
+    console.log("Found users:", users); 
     res.json(users);
   } catch (err) {
     console.error("User Route Error:", err);
@@ -52,7 +47,6 @@ app.get('/api/users', async (req, res) => {
   }
 });
 
-// --- START SERVER ---
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`🚀 Real-time server running on port ${PORT}`);

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// Simple test endpoint
 router.get('/', (req, res) => {
   res.json([
     { 

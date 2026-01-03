@@ -42,13 +42,11 @@ const Navbar = () => {
       boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
       fontFamily: '"Inter", sans-serif'
     }}>
-      {/* --- Logo --- */}
       <Link to="/" style={{ textDecoration: 'none', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
         <span style={{ fontSize: '24px' }}>🚀</span>
         <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: '800' }}>TaskFlow</h2>
       </Link>
 
-      {/* --- Desktop Menu --- */}
       <div className="desktop-menu" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         {token ? (
           <>
@@ -58,7 +56,6 @@ const Navbar = () => {
             
             <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.3)', margin: '0 10px' }} />
             
-            {/* User Avatar Badge */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '10px' }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold' }}>
                 {user?.name?.charAt(0).toUpperCase()}
@@ -76,7 +73,6 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* --- Mobile Toggle --- */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
         style={{ display: 'none', background: 'none', border: 'none', color: 'white', fontSize: '24px', cursor: 'pointer' }}
@@ -85,7 +81,6 @@ const Navbar = () => {
         {isOpen ? '✕' : '☰'}
       </button>
 
-      {/* --- Mobile Menu Overlay --- */}
       {isOpen && (
         <div style={{
           position: 'absolute', top: '70px', left: 0, width: '100%', 

@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { io } from 'socket.io-client';
 import API from '../../services/api';
 import TaskForm from './TaskForm';
-import EmojiPicker from 'emoji-picker-react'; // You'll need to install this package
+import EmojiPicker from 'emoji-picker-react'; 
 
 const socket = io('http://localhost:5000');
 
@@ -75,17 +75,14 @@ const TaskBoard = () => {
         userName: currentUser
       });
       
-      // Update tasks in both board and side panel
       setTasks(tasks.map(t => t._id === taskId ? res.data : t));
       
-      // Clear input
       if (fromSidePanel) {
         setCommentInput({ ...commentInput, 'sidePanel': '' });
       } else {
         setCommentInput({ ...commentInput, [taskId]: '' });
       }
       
-      // Close emoji picker if open
       setShowEmojiPicker({});
     } catch (err) { console.error(err); }
   };
@@ -162,7 +159,7 @@ const TaskBoard = () => {
   return (
     <div style={{ background: '#f1f5f9', minHeight: '100vh', fontFamily: '"Inter", sans-serif', color: '#1e293b' }}>
       
-      {/* --- STICKY HEADER --- */}
+  
       <div style={{ position: 'sticky', top: 0, zIndex: 10, background: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(10px)', borderBottom: '1px solid #e2e8f0', padding: '15px 40px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1400px', margin: '0 auto' }}>
           <div>
@@ -181,13 +178,11 @@ const TaskBoard = () => {
       </div>
 
       <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '30px' }}>
-        
-        {/* --- ADD TASK SECTION --- */}
+   
         <div style={{ marginBottom: '40px' }}>
           <TaskForm projectId={projectId} onTaskAdded={(t) => setTasks([...tasks, t])} />
         </div>
 
-        {/* --- KANBAN BOARD --- */}
         <DragDropContext onDragEnd={onDragEnd}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '25px', alignItems: 'start' }}>
             {['To Do', 'In Progress', 'Done'].map(col => {
@@ -207,7 +202,6 @@ const TaskBoard = () => {
                         </span>
                       </div>
 
-                      {/* --- SCROLLABLE TASK AREA --- */}
                       <div style={{ flex: 1 }}>
                         {filteredTasks.filter(t => t.status === col).map((task, index) => (
                           <Draggable key={task._id} draggableId={task._id} index={index}>
@@ -234,7 +228,6 @@ const TaskBoard = () => {
                                 <h4 style={{ margin: '12px 0 6px 0', fontSize: '15px', fontWeight: 600 }}>{task.title}</h4>
                                 <p style={{ fontSize: '13px', color: '#64748b', marginBottom: '15px', lineHeight: '1.4' }}>{task.description}</p>
 
-                                {/* Comments List */}
                                 {task.comments?.length > 0 && (
                                   <div style={{ background: '#f8fafc', borderRadius: '8px', padding: '8px', marginBottom: '12px' }}>
                                     {task.comments.slice(-2).map((c, i) => ( // Show last 2 comments
@@ -245,7 +238,6 @@ const TaskBoard = () => {
                                   </div>
                                 )}
 
-                                {/* Compact Input Field with Emoji */}
                                 <div style={{ display: 'flex', gap: '6px', position: 'relative' }}>
                                   <button 
                                     onClick={(e) => {
@@ -297,7 +289,6 @@ const TaskBoard = () => {
           
         </DragDropContext>
         
-        {/* --- SLIDE-OUT PANEL --- */}
         {selectedTask && (
           <div style={{
             position: 'fixed', top: 0, right: 0, width: '450px', height: '100vh',
@@ -305,7 +296,6 @@ const TaskBoard = () => {
             zIndex: 3000, padding: '30px', transition: '0.3s ease-in-out',
             display: 'flex', flexDirection: 'column', overflowY: 'auto'
           }}>
-            {/* Header with actions */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <button 
                 onClick={() => setSelectedTask(null)}
@@ -330,7 +320,7 @@ const TaskBoard = () => {
 
             <div style={{ flex: 1 }}>
               {isEditing ? (
-                // EDIT MODE
+              
                 <div>
                   <label style={labelStyle}>Title</label>
                   <input
@@ -382,7 +372,7 @@ const TaskBoard = () => {
                   </button>
                 </div>
               ) : (
-                // VIEW MODE
+                
                 <div>
                   <span style={{ fontSize: '12px', fontWeight: 'bold', color: getStatusStyle(selectedTask.status).color, textTransform: 'uppercase' }}>
                     {selectedTask.status}
@@ -424,10 +414,8 @@ const TaskBoard = () => {
                     </div>
                   </div>
 
-                  {/* Comments Section in Side Panel */}
                   <label style={labelStyle}>Comments ({selectedTask.comments?.length || 0})</label>
                   
-                  {/* Add Comment in Side Panel */}
                   <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', position: 'relative' }}>
                     <button 
                       onClick={() => setShowEmojiPicker({ sidePanel: true })}
@@ -475,7 +463,6 @@ const TaskBoard = () => {
                     </button>
                   </div>
 
-                  {/* Comments List */}
                   <div style={{ maxHeight: '300px', overflowY: 'auto', background: '#f8fafc', padding: '15px', borderRadius: '12px' }}>
                     {selectedTask.comments?.length > 0 ? (
                       selectedTask.comments.map((c, i) => (
@@ -508,7 +495,6 @@ const TaskBoard = () => {
           </div>
         )}
 
-        {/* Backdrop to close panel when clicking outside */}
         {selectedTask && (
           <div 
             onClick={() => setSelectedTask(null)}
@@ -516,7 +502,6 @@ const TaskBoard = () => {
           />
         )}
 
-        {/* --- MODERN FOOTER --- */}
         <footer style={{ 
           marginTop: '50px', 
           padding: '30px 40px', 

@@ -5,7 +5,7 @@ const TaskSchema = new mongoose.Schema({
   description: String,
   status: { type: String, enum: ['To Do', 'In Progress', 'Done'], default: 'To Do' },
   priority: { type: String, enum: ['Low', 'Medium', 'High'], default: 'Medium' },
-  // Array of ObjectIds to support Group Tasks
+
   assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
   project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true },
   dueDate: Date,

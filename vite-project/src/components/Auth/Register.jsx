@@ -9,17 +9,15 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Disable button to prevent double submission
+    setLoading(true); 
     
     try {
-      // Ensure the endpoint matches your backend exactly
       const response = await API.post('/auth/register', formData);
       
       console.log("Registration success:", response.data);
       alert("Registration successful! Please login.");
       navigate('/login');
     } catch (err) {
-      // FIX: Capture the actual error message from the backend (500, 400, etc.)
       const serverMessage = err.response?.data?.message || "Registration failed. Please try again.";
       console.error("Full Error Object:", err.response);
       alert("Server Error: " + serverMessage);
@@ -34,7 +32,7 @@ const Register = () => {
     padding: '10px', 
     borderRadius: '4px', 
     border: '1px solid #ddd',
-    boxSizing: 'border-box' // Prevents input from overflowing container
+    boxSizing: 'border-box' 
   };
 
   return (

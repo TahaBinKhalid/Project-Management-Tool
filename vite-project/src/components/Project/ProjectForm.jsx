@@ -8,8 +8,8 @@ const ProjectForm = ({ onProjectCreated }) => {
     e.preventDefault();
     try {
       const res = await API.post('/projects', { title });
-      onProjectCreated(res.data); // Update the list in ProjectList.jsx
-      setTitle(''); // Reset input
+      onProjectCreated(res.data); 
+      setTitle(''); 
     } catch (err) {
       console.error("Error creating project", err);
       alert("Failed to create project");

@@ -19,7 +19,6 @@ const Profile = () => {
         userId: storedUser.id
       });
       
-      // Update LocalStorage so the UI reflects the change
       const updatedUser = { ...storedUser, name: res.data.name, email: res.data.email };
       localStorage.setItem('user', JSON.stringify(updatedUser));
       
@@ -34,7 +33,7 @@ const Profile = () => {
 
   return (
     <div style={profileContainerStyle}>
-      {/* Header Section */}
+     
       <div style={headerCardStyle}>
         <div style={avatarContainerStyle}>
           <div style={avatarStyle}>
@@ -63,7 +62,6 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Profile Form Card */}
       <div style={formCardStyle}>
         <div style={formHeaderStyle}>
           <div style={formIconStyle}>⚙️</div>
@@ -88,7 +86,7 @@ const Profile = () => {
         )}
 
         <form onSubmit={handleSubmit} style={formStyle}>
-          {/* Name Field */}
+        
           <div style={fieldGroupStyle}>
             <div style={fieldHeaderStyle}>
               <label style={labelStyle}>
@@ -106,7 +104,6 @@ const Profile = () => {
             />
           </div>
 
-          {/* Email Field */}
           <div style={fieldGroupStyle}>
             <div style={fieldHeaderStyle}>
               <label style={labelStyle}>
@@ -124,7 +121,6 @@ const Profile = () => {
             />
           </div>
 
-          {/* Action Buttons */}
           <div style={buttonGroupStyle}>
             <button 
               type="submit" 
@@ -162,7 +158,6 @@ const Profile = () => {
           </div>
         </form>
 
-        {/* Additional Information */}
         <div style={infoCardStyle}>
           <div style={infoIconStyle}>💡</div>
           <div>

@@ -11,14 +11,11 @@ const Login = () => {
     try {
       const res = await API.post('/auth/login', formData);
       
-      // 1. Store auth data
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       
-      // 2. Redirect to dashboard immediately
       navigate('/dashboard');
       
-      // 3. Force a reload to refresh Navbar state
       window.location.reload(); 
     } catch (err) {
       alert(err.response?.data?.message || "Login failed. Check credentials.");

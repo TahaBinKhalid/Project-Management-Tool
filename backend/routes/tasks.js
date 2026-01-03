@@ -4,13 +4,11 @@ const Task = require('../models/Task');
 const User = require('../models/User');
 const sendEmail = require('../utils/sendEmail');
 
-// CREATE TASK (Group Assignment + Multiple Emails)
 router.post('/', async (req, res) => {
   try {
     const newTask = new Task(req.body);
     const savedTask = await newTask.save();
 
-    // 1. If users are assigned, fetch their details to send emails
     if (req.body.assignedTo && req.body.assignedTo.length > 0) {
       const users = await User.find({ _id: { $in: req.body.assignedTo } });
 
@@ -34,7 +32,6 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // 2. Real-time update via Socket.io
     const io = req.app.get('io');
     io.to(req.body.project.toString()).emit('taskUpdated', savedTask);
 
@@ -44,7 +41,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET TASKS FOR PROJECT
 router.get('/project/:projectId', async (req, res) => {
   try {
     const tasks = await Task.find({ project: req.params.projectId })
@@ -55,7 +51,6 @@ router.get('/project/:projectId', async (req, res) => {
   }
 });
 
-// ADD COMMENT & NOTIFY ASSIGNEES
 router.post('/:id/comments', async (req, res) => {
   try {
     const { text, userName } = req.body;
@@ -64,7 +59,6 @@ router.post('/:id/comments', async (req, res) => {
     task.comments.push({ text, userName });
     await task.save();
 
-    // Notify all assigned users about the comment
     task.assignedTo.forEach(async (user) => {
       const html = `<p><strong>${userName}</strong> commented on "${task.title}": <em>"${text}"</em></p>`;
       await sendEmail(user.email, `💬 New Comment: ${task.title}`, "New comment added", html);
