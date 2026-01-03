@@ -1,0 +1,18 @@
+:root {
+  --primary: #2563eb;
+  --bg-gray: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #1e293b;
+  --border: #e2e8f0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-gray);
+  color: var(--text-main);
+}
+
+* {
+  box-sizing: border-box;
+}
